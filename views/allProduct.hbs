@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale = 1.0">
+        <meta http-equiv="X-UA-Compatible" content = "ie=edge">
+        <title>Toan Bo San Pham</title>
+    </head>
+    <body>
+        <table>
+        <tr>
+            <td>Ten San Pham</td>
+            <td>MauSac</td>
+            <td>Price</td>
+        </tr>
+        <tr>
+            <td>{{# each Product}}</td>
+            <td>{{ProductName}} -- {{[Color]}} -- {{[Price]}}</td>
+        </tr>
+        {{/each}}
+        </table>
+    </body>
+</html>
