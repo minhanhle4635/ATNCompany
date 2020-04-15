@@ -45,7 +45,7 @@ router.get('/insert',(req,res)=>{
     res.render('insertProduct');
 })
 
-router.post('/insert',(req,res)=>{
+router.post('/insert', async (req,res)=>{
     let ProductName = req.body.ProductName;
     let Color = req.body.Color;
     let Price = req.body.Price;
@@ -65,7 +65,7 @@ router.get('/search',(req,res)=>{
     res.render('searchProduct');
 })
 
-router.post('/search',(req,res)=>{
+router.post('/search',async (req,res)=>{
     let searchSP = req.body.tenSP;
     let client = await MongoClient.connect(url);
     let dbo = client.db("ATNCompany");
