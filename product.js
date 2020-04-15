@@ -2,18 +2,14 @@ const express = require('express');
 var router = express.Router();
 var MongoClient = require('mongodb').MongoClient;
 
-//var url = 'mongodb://localhost::27017';
-var url = 'mongodb+srv://minhanhle:minhanh123@cluster0-p2f69.gcp.mongodb.net/test?retryWrites=true&w=majority'
+var url = 'mongodb://localhost::27017/ATNCompany';
+//var url = 'mongodb+srv://minhanhle:minhanh123@cluster0-p2f69.gcp.mongodb.net/test?retryWrites=true&w=majority'
 
 router.get('/', async (req,res)=>{
     let client = await MongoClient.connect(url);
     let dbo = client.db("ATNCompany");
     let results = await dbo.collection("Product").find({}).toArray();
     res.render('allProduct',{Product:results});
-})
-
-router.get('/search',(req,res)=>{
-    res.render('searchProduct');
 })
 
 router.get('/edit', async(req,res)=>{
@@ -33,7 +29,7 @@ router.post('/edit', async(req,res)=>{
     let name = req.body.name;
     let color = req.body.color;
     let price = req.body.price;
-    let newValues ={$set : {ProductName: name, Color: color ,Price:price}};
+    let newValues ={$set : {ProductName: name, Color: color, Price:price}};
     var ObjectID = require('mongodb').ObjectID;
     let condition = {"_id" : ObjectID(id)};
     
@@ -43,15 +39,6 @@ router.post('/edit', async(req,res)=>{
     //
     let results = await dbo.collection("Product").find({}).toArray();
     res.render('allProduct',{product:results});
-})
-
-
-router.post('/search',(req,res)=>{
-    let searchSP = req.body.tenSP;
-    let client = await MongoClient.connect(url);
-    let dbo = client.db("ATNCompany");
-    let results = await dbo.collection("Product").find({"ProductName":searchSP}).toArray();
-    res.render('Product', {product:results});
 })
 
 router.get('/insert',(req,res)=>{
@@ -74,5 +61,16 @@ router.post('/insert',(req,res)=>{
     res.render('allProduct',{product:results});
 })
 
+router.get('/search',(req,res)=>{
+    res.render('searchProduct');
+})
+
+router.post('/search',(req,res)=>{
+    let searchSP = req.body.tenSP;
+    let client = await MongoClient.connect(url);
+    let dbo = client.db("ATNCompany");
+    let results = await dbo.collection("Product").find({"ProductName":searchSP}).toArray();
+    res.render('Product', {product:results});
+})
 
 module.exports = router;
